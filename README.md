@@ -1,2 +1,2 @@
-# addict
-Small package for an extension of dicts that allows for easy arithmetic operations on sets!
+# (A)rithmetic (Dict)ionarie(s)
+Small package with functions for performing commonly used arithmetic operations on dictionaries. This can be useful in situations where you want a more "lightweight" alternative to perform operations on a key-value structured data. For example you can use adict as an alternative to: `Casting dictionaries to pandas DataFrames` -> `Performing operations based on INDEX or COLUMNS` -> `Casting DataFrame to dictionaries`. As you may notice this is a small niche tool for small niche problems.
