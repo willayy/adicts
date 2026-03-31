@@ -27,7 +27,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: 3.11
+          python-version: 3.14
       - run: pip install -r requirements.txt pylint
       - run: pylint adicts/
 
@@ -37,7 +37,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v4
         with:
-          python-version: 3.11
+          python-version: 3.14
       - run: pip install -r requirements.txt pyright
       - run: pyright adicts/
 
@@ -47,11 +47,12 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v4
         with:
-          python-version: 3.11
+          python-version: 3.14
       - run: pip install black
-      - run: black --check .
+      - run: black --check --target-version=py314 adicts/
 
   gh-release:
+    needs: [build-test, lint, type-check, format]
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -62,6 +63,7 @@ jobs:
           release-type: python
 
   pypi-publish:
+    needs: [gh-release]
     name: Upload release to PyPI
     runs-on: ubuntu-latest
     environment:
@@ -69,21 +71,16 @@ jobs:
       url: https://pypi.org/p/adicts
     permissions:
       id-token: write # This is required for trusted publishing
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-
       - name: Install build dependencies
         run: python -m pip install --upgrade pip build
-
       - name: Build package
         run: python -m build
-
       - name: Publish package to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
