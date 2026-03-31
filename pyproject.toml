@@ -1,6 +1,6 @@
 [project]
 name = "adicts"
-version = "1.0.0"
+version = "1"
 description = "(a)rithmetic operations for (dict)ionaries"
 authors = [{ name = "William Norland"}]
 readme = "README.md"
