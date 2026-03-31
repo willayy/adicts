@@ -7,6 +7,30 @@ on:
     branches: [main]
 
 jobs:
+  check-if-version-is-updated:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: 3.14
+      - run: |
+          # Get current version from pyproject.toml
+          CURRENT_VERSION=$(grep -m 1 '^version = ' pyproject.toml | cut -d '"' -f 2)
+
+          # Get the latest tag from the repository
+          git fetch --tags
+          LATEST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "0")
+
+          echo "Current version: $CURRENT_VERSION"
+          echo "Latest tag: $LATEST_TAG"
+
+          # Compare versions
+          if [ "$CURRENT_VERSION" = "$LATEST_TAG" ]; then
+            echo "Error: Version in pyproject.toml ($CURRENT_VERSION) has not been updated."
+            exit 1
+          fi
+
   build-test:
     runs-on: ${{ matrix.os }}
     strategy:
