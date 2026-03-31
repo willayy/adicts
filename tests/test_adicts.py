@@ -46,9 +46,7 @@ dict_positive: st.SearchStrategy[Dict[Key, Numeric]] = st.dictionaries(
 
 
 @given(dict_numeric, dict_numeric)
-def test_subtract_property(
-    d1: Dict[Key, Numeric], d2: Dict[Key, Numeric]
-) -> None:
+def test_subtract_property(d1: Dict[Key, Numeric], d2: Dict[Key, Numeric]) -> None:
     """Test subtract property."""
     res = a.subtract(d1, d2)
     common_keys = d1.keys() & d2.keys()
@@ -58,9 +56,7 @@ def test_subtract_property(
 
 
 @given(dict_numeric, dict_numeric)
-def test_add_property(
-    d1: Dict[Key, Numeric], d2: Dict[Key, Numeric]
-) -> None:
+def test_add_property(d1: Dict[Key, Numeric], d2: Dict[Key, Numeric]) -> None:
     """Test add property."""
     res = a.add(d1, d2)
     common_keys = d1.keys() & d2.keys()
@@ -94,9 +90,7 @@ def test_v_conditional_remove_property(d: Dict[int, int]) -> None:
 
 
 @given(dict_numeric, st.lists(keys))
-def test_remove_property(
-    d: Dict[Key, Numeric], keys_to_remove: List[Key]
-) -> None:
+def test_remove_property(d: Dict[Key, Numeric], keys_to_remove: List[Key]) -> None:
     """Test remove property."""
     res = a.remove(d, keys_to_remove)
     for k in res:
@@ -125,9 +119,7 @@ def test_k_to_np_property(d: Dict[Any, Numeric]) -> None:
 
 @given(
     st.dictionaries(keys, st.integers())
-    | st.dictionaries(
-        keys, st.floats(allow_nan=False, allow_infinity=False)
-    )
+    | st.dictionaries(keys, st.floats(allow_nan=False, allow_infinity=False))
 )
 def test_v_to_np_property(d: Dict[Key, Any]) -> None:
     """Test v_to_np property."""
@@ -138,9 +130,7 @@ def test_v_to_np_property(d: Dict[Key, Any]) -> None:
 
 
 @given(dict_numeric, dict_numeric)
-def test_d_multiply_property(
-    d: Dict[Key, Numeric], dmul: Dict[Key, Numeric]
-) -> None:
+def test_d_multiply_property(d: Dict[Key, Numeric], dmul: Dict[Key, Numeric]) -> None:
     """Test d_multiply property."""
     res = a.d_multiply(d, dmul)
     assert set(res.keys()) == set(d.keys())
@@ -150,9 +140,7 @@ def test_d_multiply_property(
 
 
 @given(dict_numeric, numeric_values)
-def test_f_multiply_property(
-    d: Dict[Key, Numeric], factor: Numeric
-) -> None:
+def test_f_multiply_property(d: Dict[Key, Numeric], factor: Numeric) -> None:
     """Test f_multiply property."""
     res = a.f_multiply(d, factor)
     assert set(res.keys()) == set(d.keys())
@@ -161,9 +149,7 @@ def test_f_multiply_property(
 
 
 @given(dict_positive, st.dictionaries(keys, exponent_values))
-def test_d_pow_property(
-    d: Dict[Key, Numeric], exponent: Dict[Key, Numeric]
-) -> None:
+def test_d_pow_property(d: Dict[Key, Numeric], exponent: Dict[Key, Numeric]) -> None:
     """Test d_pow property."""
     res = a.d_pow(d, exponent)
     assert set(res.keys()) == set(d.keys())

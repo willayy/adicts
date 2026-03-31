@@ -1,5 +1,5 @@
 """
-Implementations of adict functions. 
+Implementations of adict functions.
 """
 
 from typing import TypeVar, Union, Callable
@@ -48,9 +48,7 @@ def add(
     return {k: d1[k] + d2[k] for k in common_keys}
 
 
-def k_conditional_remove(
-    d: dict[A, B], condition: Callable[[A], bool]
-) -> dict[A, B]:
+def k_conditional_remove(d: dict[A, B], condition: Callable[[A], bool]) -> dict[A, B]:
     """
     Removes items from dictionary if condition returns true when applied to keys.
 
@@ -64,9 +62,7 @@ def k_conditional_remove(
     return {k: v for k, v in d.items() if not condition(k)}
 
 
-def v_conditional_remove(
-    d: dict[A, B], condition: Callable[[B], bool]
-) -> dict[A, B]:
+def v_conditional_remove(d: dict[A, B], condition: Callable[[B], bool]) -> dict[A, B]:
     """
     Removes items from dictionary if condition returns true when applied to values.
 
@@ -119,9 +115,7 @@ def v_to_np(d: dict[A, Numeric]) -> np.ndarray:
     return np.array(list(d.values()))
 
 
-def d_multiply(
-    d: dict[A, Numeric], dmul: dict[A, Numeric]
-) -> dict[A, Numeric]:
+def d_multiply(d: dict[A, Numeric], dmul: dict[A, Numeric]) -> dict[A, Numeric]:
     """
     Multiplies dictionary values by values of another dictionary for common keys.
 
@@ -149,9 +143,7 @@ def f_multiply(d: dict[A, Numeric], factor: Numeric) -> dict[A, Numeric]:
     return {k: d[k] * factor for k in d.keys()}
 
 
-def d_pow(
-    d: dict[A, Numeric], exponent: dict[A, Numeric]
-) -> dict[A, Numeric]:
+def d_pow(d: dict[A, Numeric], exponent: dict[A, Numeric]) -> dict[A, Numeric]:
     """
     Raises dictionary values to powers specified in another dictionary.
 
