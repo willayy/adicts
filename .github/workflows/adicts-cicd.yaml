@@ -7,7 +7,7 @@ on:
     branches: [main]
 
 jobs:
-  check-if-version-is-updated:
+  version-check:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -31,7 +31,7 @@ jobs:
             exit 1
           fi
 
-  build-test:
+  test:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -75,7 +75,8 @@ jobs:
       - run: pip install black
       - run: black --check --target-version=py314 adicts/
 
-  gh-release:
+  publish-gh-release:
+    needs: [version-check, test, lint, type-check, format]
     runs-on: ubuntu-latest
     outputs:
       version: ${{ steps.get_version.outputs.VERSION }}
@@ -105,8 +106,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VERSION: ${{ steps.get_version.outputs.VERSION }}
 
-  pypi-publish:
-    needs: [gh-release]
+  publish-pypi-package:
+    needs: [publish-gh-release]
     name: Upload release to PyPI
     runs-on: ubuntu-latest
     environment:
