@@ -100,7 +100,7 @@ jobs:
         if: steps.get_version.outputs.VERSION != ''
         with:
           tag_name: v${{ steps.get_version.outputs.VERSION }}
-          name: Release v${{ env.VERSION }}
+          name: v${{ env.VERSION }}
           generate_release_notes: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
