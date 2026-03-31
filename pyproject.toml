@@ -9,6 +9,10 @@ requires-python = ">=3.11"
 dependencies = [
     "numpy",
 ]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License"
+]
 
 [project.urls]
 Homepage = "https://github.com/willayy/adict"
@@ -16,8 +20,3 @@ Homepage = "https://github.com/willayy/adict"
 [build-system]
 requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
-
-classifiers = [
-    "Programming Language :: Python :: 3",
-    "License :: OSI Approved :: MIT License"
-]
