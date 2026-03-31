@@ -60,9 +60,6 @@ jobs:
       - uses: google-github-actions/release-please-action@v4
         with:
           release-type: python
-          package-name: adicts
-          version-file: pyproject.toml
-          # This will also create/update a CHANGELOG.md file
 
   pypi-publish:
     name: Upload release to PyPI
