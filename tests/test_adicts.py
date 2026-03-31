@@ -4,7 +4,7 @@ Tests for adict functions.
 
 from typing import Any, Dict, List, Union
 import numpy as np
-from hypothesis import given, strategies as st
+from hypothesis import given, settings, strategies as st
 import adicts as a
 
 
@@ -45,6 +45,7 @@ dict_positive: st.SearchStrategy[Dict[Key, Numeric]] = st.dictionaries(
 )
 
 
+@settings(max_examples=10000)
 @given(dict_numeric, dict_numeric)
 def test_subtract_property(d1: Dict[Key, Numeric], d2: Dict[Key, Numeric]) -> None:
     """Test subtract property."""
@@ -55,6 +56,7 @@ def test_subtract_property(d1: Dict[Key, Numeric], d2: Dict[Key, Numeric]) -> No
         assert res[k] == d1[k] - d2[k]
 
 
+@settings(max_examples=10000)
 @given(dict_numeric, dict_numeric)
 def test_add_property(d1: Dict[Key, Numeric], d2: Dict[Key, Numeric]) -> None:
     """Test add property."""
@@ -65,6 +67,7 @@ def test_add_property(d1: Dict[Key, Numeric], d2: Dict[Key, Numeric]) -> None:
         assert res[k] == d1[k] + d2[k]
 
 
+@settings(max_examples=10000)
 @given(st.dictionaries(st.integers(), st.integers()))
 def test_k_conditional_remove_property(d: Dict[int, int]) -> None:
     """Test k_conditional_remove property."""
@@ -77,6 +80,7 @@ def test_k_conditional_remove_property(d: Dict[int, int]) -> None:
             assert k in res
 
 
+@settings(max_examples=10000)
 @given(st.dictionaries(st.integers(), st.integers()))
 def test_v_conditional_remove_property(d: Dict[int, int]) -> None:
     """Test v_conditional_remove property."""
@@ -89,6 +93,7 @@ def test_v_conditional_remove_property(d: Dict[int, int]) -> None:
             assert k in res
 
 
+@settings(max_examples=10000)
 @given(dict_numeric, st.lists(keys))
 def test_remove_property(d: Dict[Key, Numeric], keys_to_remove: List[Key]) -> None:
     """Test remove property."""
@@ -101,6 +106,7 @@ def test_remove_property(d: Dict[Key, Numeric], keys_to_remove: List[Key]) -> No
             assert k in res
 
 
+@settings(max_examples=10000)
 @given(
     st.dictionaries(st.integers(), numeric_values)
     | st.dictionaries(st.text(min_size=1), numeric_values)
@@ -110,13 +116,10 @@ def test_k_to_np_property(d: Dict[Any, Numeric]) -> None:
     res = a.k_to_np(d)
     assert isinstance(res, np.ndarray)
     assert len(res) == len(d)
-    # This is an edge case where numpy turns the null character into an empty string
-    # Fixing this issue is out of scope of this project.
-    if {np.str_("")} in set(res) and {"\x00"} in set(d.keys()):
-        return
-    assert set(res) == set(d.keys())
+    assert all(np.equal(res, list(d.keys())))
 
 
+@settings(max_examples=10000)
 @given(
     st.dictionaries(keys, st.integers())
     | st.dictionaries(keys, st.floats(allow_nan=False, allow_infinity=False))
@@ -129,6 +132,7 @@ def test_v_to_np_property(d: Dict[Key, Any]) -> None:
     assert list(res) == list(d.values())
 
 
+@settings(max_examples=10000)
 @given(dict_numeric, dict_numeric)
 def test_d_multiply_property(d: Dict[Key, Numeric], dmul: Dict[Key, Numeric]) -> None:
     """Test d_multiply property."""
@@ -139,6 +143,7 @@ def test_d_multiply_property(d: Dict[Key, Numeric], dmul: Dict[Key, Numeric]) ->
         assert res[k] == expected
 
 
+@settings(max_examples=10000)
 @given(dict_numeric, numeric_values)
 def test_f_multiply_property(d: Dict[Key, Numeric], factor: Numeric) -> None:
     """Test f_multiply property."""
@@ -148,6 +153,7 @@ def test_f_multiply_property(d: Dict[Key, Numeric], factor: Numeric) -> None:
         assert res[k] == d[k] * factor
 
 
+@settings(max_examples=10000)
 @given(dict_positive, st.dictionaries(keys, exponent_values))
 def test_d_pow_property(d: Dict[Key, Numeric], exponent: Dict[Key, Numeric]) -> None:
     """Test d_pow property."""
@@ -158,6 +164,7 @@ def test_d_pow_property(d: Dict[Key, Numeric], exponent: Dict[Key, Numeric]) -> 
         assert res[k] == expected
 
 
+@settings(max_examples=10000)
 @given(dict_positive, exponent_values)
 def test_e_pow_property(d: Dict[Key, Numeric], exponent: Numeric) -> None:
     """Test e_pow property."""
@@ -167,6 +174,7 @@ def test_e_pow_property(d: Dict[Key, Numeric], exponent: Numeric) -> None:
         assert res[k] == d[k] ** exponent
 
 
+@settings(max_examples=10000)
 @given(st.dictionaries(st.integers(), st.integers()))
 def test_k_apply_property(d: Dict[int, int]) -> None:
     """Test k_apply property."""
@@ -176,6 +184,7 @@ def test_k_apply_property(d: Dict[int, int]) -> None:
         assert res[k + 1] == v
 
 
+@settings(max_examples=10000)
 @given(st.dictionaries(st.integers(), st.integers()))
 def test_v_apply_property(d: Dict[int, int]) -> None:
     """Test v_apply property."""
