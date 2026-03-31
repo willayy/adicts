@@ -2,8 +2,9 @@
 Implementations of adict functions.
 """
 
-from typing import TypeVar, Union, Callable
+from typing import TypeVar, Union, Callable, Any
 import numpy as np
+import numpy.typing as npt
 
 A = TypeVar("A")
 B = TypeVar("B")
@@ -90,26 +91,26 @@ def remove(d: dict[A, B], keys: list[A]) -> dict[A, B]:
     return {k: v for k, v in d.items() if k not in keys}
 
 
-def k_to_np(d: dict[A, Numeric]) -> np.ndarray:
+def k_to_np(d: dict[A, B]) -> npt.NDArray[Any]:
     """
     Converts dictionary keys to a NumPy array.
 
     :param d: Input dictionary
-    :type d: dict[A, Numeric]
+    :type d: dict[A, B]
     :return: NumPy array of keys
-    :rtype: np.ndarray
+    :rtype: npt.NDArray[Any]
     """
     return np.array(list(d.keys()))
 
 
-def v_to_np(d: dict[A, Numeric]) -> np.ndarray:
+def v_to_np(d: dict[A, Numeric]) -> npt.NDArray[np.number]:
     """
     Converts dictionary values to a NumPy array.
 
     :param d: Input dictionary
     :type d: dict[A, Numeric]
     :return: NumPy array of values
-    :rtype: np.ndarray
+    :rtype: npt.NDArray[Numeric]
     """
 
     return np.array(list(d.values()))
