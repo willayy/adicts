@@ -3,9 +3,10 @@ Implementations of adict functions.
 """
 
 from typing import TypeVar, Callable
+from collections.abc import Mapping
+
 import numpy as np
 import numpy.typing as npt
-from collections.abc import Mapping
 
 A = TypeVar("A")
 B = TypeVar("B")
