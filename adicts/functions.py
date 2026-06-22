@@ -2,7 +2,7 @@
 Implementations of adict functions.
 """
 
-from typing import TypeVar, Union, Callable, Any
+from typing import TypeVar, Callable
 import numpy as np
 import numpy.typing as npt
 from collections.abc import Mapping
@@ -11,7 +11,7 @@ A = TypeVar("A")
 B = TypeVar("B")
 C = TypeVar("C")
 
-Numeric = Union[int, float]
+Numeric = int | float
 
 
 def subtract(
@@ -50,7 +50,9 @@ def add(
     return {k: d1[k] + d2[k] for k in common_keys}
 
 
-def k_conditional_remove(d: Mapping[A, B], condition: Callable[[A], bool]) -> Mapping[A, B]:
+def k_conditional_remove(
+    d: Mapping[A, B], condition: Callable[[A], bool]
+) -> Mapping[A, B]:
     """
     Removes items from dictionary if condition returns true when applied to keys.
 
@@ -64,7 +66,9 @@ def k_conditional_remove(d: Mapping[A, B], condition: Callable[[A], bool]) -> Ma
     return {k: v for k, v in d.items() if not condition(k)}
 
 
-def v_conditional_remove(d: Mapping[A, B], condition: Callable[[B], bool]) -> Mapping[A, B]:
+def v_conditional_remove(
+    d: Mapping[A, B], condition: Callable[[B], bool]
+) -> Mapping[A, B]:
     """
     Removes items from dictionary if condition returns true when applied to values.
 
@@ -92,7 +96,7 @@ def remove(d: Mapping[A, B], keys: list[A]) -> Mapping[A, B]:
     return {k: v for k, v in d.items() if k not in keys}
 
 
-def k_to_np(d: Mapping[A, B]) -> npt.NDArray[Any]:
+def k_to_np(d: Mapping[Numeric, B]) -> npt.NDArray[np.number]:
     """
     Converts dictionary keys to a NumPy array.
 
