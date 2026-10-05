@@ -122,7 +122,9 @@ def v_to_np(d: Mapping[A, Numeric]) -> npt.NDArray[np.number]:
     return np.array(list(d.values()))
 
 
-def d_multiply(d: Mapping[A, Numeric], dmul: Mapping[A, Numeric]) -> Mapping[A, Numeric]:
+def d_multiply(
+    d: Mapping[A, Numeric], dmul: Mapping[A, Numeric]
+) -> Mapping[A, Numeric]:
     """
     Multiplies dictionary values by values of another dictionary for common keys.
 
