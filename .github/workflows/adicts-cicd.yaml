@@ -76,6 +76,7 @@ jobs:
       - run: black --check --target-version=py314 adicts/
 
   publish-gh-release:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     needs: [version-check, test, lint, type-check, format]
     runs-on: ubuntu-latest
     outputs:
@@ -107,6 +108,7 @@ jobs:
           VERSION: ${{ steps.get_version.outputs.VERSION }}
 
   publish-pypi-package:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     needs: [publish-gh-release]
     name: Upload release to PyPI
     runs-on: ubuntu-latest
