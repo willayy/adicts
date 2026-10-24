@@ -79,6 +79,8 @@ jobs:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     needs: [version-check, test, lint, type-check, format]
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     outputs:
       version: ${{ steps.get_version.outputs.VERSION }}
     steps:
@@ -116,6 +118,7 @@ jobs:
       name: pypi
       url: https://pypi.org/p/adicts
     permissions:
+      contents: read
       id-token: write # This is required for trusted publishing
     steps:
       - name: Checkout repository
